@@ -1,0 +1,96 @@
+{
+  "Cultures": [
+    {
+      "Name": "en-US",
+      "DisplayName": "Englisch (United States)",
+      "FlagName": "us"
+    },
+    {
+      "Name": "de-DE",
+      "DisplayName": "Deutsch (Deutschland)",
+      "FlagName": "de"
+    }
+  ],
+  "Translations": [
+    {
+      "Term": "todos",
+      "Culture": "en-US",
+      "Value": "todos"
+    },
+    {
+      "Term": "todos",
+      "Culture": "de-DE",
+      "Value": "Aufgaben"
+    },
+    {
+      "Term": "whatNeedsTobeDone",
+      "Culture": "en-US",
+      "Value": "What needs to be done?"
+    },
+    {
+      "Term": "whatNeedsTobeDone",
+      "Culture": "de-DE",
+      "Value": "Was muss erledigt werden?"
+    },
+    {
+      "Term": "itemsLeft",
+      "Culture": "en-US",
+      "Value": "items left"
+    },
+    {
+      "Term": "itemsLeft",
+      "Culture": "de-DE",
+      "Value": "Aufgaben übrig"
+    },
+    {
+      "Term": "filterAll",
+      "Culture": "en-US",
+      "Value": "All"
+    },
+    {
+      "Term": "filterAll",
+      "Culture": "de-DE",
+      "Value": "Alle"
+    },
+    {
+      "Term": "filterActive",
+      "Culture": "en-US",
+      "Value": "Active"
+    },
+    {
+      "Term": "filterActive",
+      "Culture": "de-DE",
+      "Value": "Offen"
+    },
+    {
+      "Term": "filterCompleted",
+      "Culture": "en-US",
+      "Value": "Completed"
+    },
+    {
+      "Term": "filterCompleted",
+      "Culture": "de-DE",
+      "Value": "Erledigt"
+    },
+    {
+      "Term": "clearCompleted",
+      "Culture": "en-US",
+      "Value": "Clear Completed"
+    },
+    {
+      "Term": "clearCompleted",
+      "Culture": "de-DE",
+      "Value": "Erledigte entfernen"
+    },
+    {
+      "Term": "markAllAsComplete",
+      "Culture": "en-US",
+      "Value": "Mark all as complete"
+    },
+    {
+      "Term": "markAllAsComplete",
+      "Culture": "de-DE",
+      "Value": "Alle als erledigt markieren"
+    }
+  ]
+}

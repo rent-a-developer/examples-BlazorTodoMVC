@@ -1,0 +1,49 @@
+﻿<ul class="todo-list">
+    @foreach (var todo in this.GetFilteredTodos())
+    {
+        <TodoItem Todo="@todo" ChangeTodoTitle="this.ChangeTodoTitle" ToggleTodo="this.ToggleTodo" RemoveTodo="this.RemoveTodo" />
+    }
+</ul>
+
+@code
+{
+    /// <summary>
+    /// The list of todos to display.
+    /// </summary>
+    [Parameter]
+    public IList<Todo> Todos { get; set; }
+
+    /// <summary>
+    /// The filter to filter the todos by.
+    /// </summary>
+    [Parameter]
+    public TodoFilter Filter { get; set; }
+
+    /// <summary>
+    /// A callback invoked when the user wants to change the title of a todo.
+    /// </summary>
+    [Parameter]
+    public EventCallback<ChangeTodoTitleEventArgs> ChangeTodoTitle { get; set; }
+
+    /// <summary>
+    /// A callback invoked when the user wants to toggle the completion status of a todo.
+    /// </summary>
+    [Parameter]
+    public EventCallback<TodoEventArgs> ToggleTodo { get; set; }
+
+    /// <summary>
+    /// A callback invoked when the user wants to remove a todo.
+    /// </summary>
+    [Parameter]
+    public EventCallback<TodoEventArgs> RemoveTodo { get; set; }
+
+    private IList<Todo> GetFilteredTodos()
+    {
+        return this.Filter switch
+        {
+            TodoFilter.All => this.Todos,
+            TodoFilter.Active => this.Todos.Where(a => !a.IsComplete).ToList(),
+            TodoFilter.Completed => this.Todos.Where(a => a.IsComplete).ToList()
+        };
+    }
+}

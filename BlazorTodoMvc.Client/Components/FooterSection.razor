@@ -1,0 +1,49 @@
+﻿@inject IStringLocalizer localizer
+
+@if (this.AnyTodos)
+{
+    <footer class="footer">
+        <span class="todo-count"><strong>@this.NumberOfActiveTodos</strong> @this.localizer["itemsLeft"]</span>
+        <ul class="filters">
+            <li>
+                <a class="@(this.Filter == TodoFilter.All ? "selected" : "")" href="/">@this.localizer["filterAll"]</a>
+            </li>
+            <li>
+                <a class="@(this.Filter == TodoFilter.Active ? "selected" : "")" href="/Active">@this.localizer["filterActive"]</a>
+            </li>
+            <li>
+                <a class="@(this.Filter == TodoFilter.Completed ? "selected" : "")" href="/Completed">@this.localizer["filterCompleted"]</a>
+            </li>
+        </ul>
+        @if (this.AnyCompletedTodos)
+        {
+            <button class="clear-completed" @onclick="this.ClearCompletedTodos">@this.localizer["clearCompleted"]</button>
+        }
+    </footer>
+}
+
+@code
+{
+    /// <summary>
+    /// The list of todos.
+    /// </summary>
+    [Parameter]
+    public IList<Todo> Todos { get; set; }
+
+    /// <summary>
+    /// The filter to filter the todos by.
+    /// </summary>
+    [Parameter]
+    public TodoFilter Filter { get; set; }
+
+    /// <summary>
+    /// A callback invoked when the user wants to clear all completed todos.
+    /// </summary>
+    [Parameter]
+    public EventCallback ClearCompletedTodos { get; set; }
+
+    private Boolean AnyTodos => this.Todos.Count > 0;
+    private Boolean AnyCompletedTodos => this.Todos.Any(a => a.IsComplete);
+    
+    private Int32 NumberOfActiveTodos => this.Todos.Count(a => !a.IsComplete);
+}

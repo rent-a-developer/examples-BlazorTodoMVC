@@ -1,0 +1,52 @@
+﻿@inject IStringLocalizer localizer
+
+@if (this.AnyTodos)
+{
+    <section class="main">
+        <input id="toggle-all" class="toggle-all" type="checkbox" @onchange="this.ToggleAllTodos" checked="@this.AllTodosComplete">
+        <label for="toggle-all">@this.localizer["markAllAsComplete"]</label>
+        <TodoList Todos="@this.Todos" ChangeTodoTitle="this.ChangeTodoTitle" ToggleTodo="this.ToggleTodo" RemoveTodo="this.RemoveTodo" Filter="this.Filter" />
+    </section>
+}
+
+@code
+{
+    /// <summary>
+    /// The list of todos to display.
+    /// </summary>
+    [Parameter]
+    public IList<Todo> Todos { get; set; }
+
+    /// <summary>
+    /// The filter to filter the todos by.
+    /// </summary>
+    [Parameter]
+    public TodoFilter Filter { get; set; }
+
+    /// <summary>
+    /// A callback invoked when the user wants to toggle the completion status of all todos.
+    /// </summary>
+    [Parameter]
+    public EventCallback ToggleAllTodos { get; set; }
+
+    /// <summary>
+    /// A callback invoked when the user wants to change the title of a todo.
+    /// </summary>
+    [Parameter]
+    public EventCallback<ChangeTodoTitleEventArgs> ChangeTodoTitle { get; set; }
+
+    /// <summary>
+    /// A callback invoked when the user wants to toggle the completion status of a todo.
+    /// </summary>
+    [Parameter]
+    public EventCallback<TodoEventArgs> ToggleTodo { get; set; }
+
+    /// <summary>
+    /// A callback invoked when the user wants to remove a todo.
+    /// </summary>
+    [Parameter]
+    public EventCallback<TodoEventArgs> RemoveTodo { get; set; }
+
+    private Boolean AnyTodos => this.Todos.Count > 0;
+    private Boolean AllTodosComplete => this.Todos.All(a => a.IsComplete);
+}

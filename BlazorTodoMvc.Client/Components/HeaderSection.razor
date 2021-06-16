@@ -1,0 +1,31 @@
+﻿@inject IStringLocalizer localizer
+
+<header class="header">
+    <h1>@this.localizer["todos"]</h1>
+    <input class="new-todo" placeholder="@this.localizer["whatNeedsTobeDone"]" @bind="this.newTodoTitle" @bind:event="oninput" @onkeydown="this.OnTitleTextBoxKeyDown" autofocus>
+</header>
+
+@code
+{
+    /// <summary>
+    /// A callback invoked when the user wants to add a new todo.
+    /// </summary>
+    [Parameter]
+    public EventCallback<AddTodoEventArgs> AddTodo { get; set; }
+
+    private async Task OnTitleTextBoxKeyDown(KeyboardEventArgs args)
+    {
+        if (args.Key != "Enter")
+        {
+            return;
+        }
+
+        if (!String.IsNullOrWhiteSpace(this.newTodoTitle))
+        {
+            await this.AddTodo.InvokeAsync(new AddTodoEventArgs(this.newTodoTitle.Trim()));
+            this.newTodoTitle = "";
+        }
+    }
+
+    private String newTodoTitle;
+}

@@ -1,0 +1,63 @@
+﻿@page "/"
+@page "/{FilterParameter}"
+@inject NavigationManager navigationManager
+@inject TodoRepository repository
+
+<section class="todoapp">
+    <HeaderSection AddTodo="this.OnAddTodo" />
+    <MainSection Todos="this.repository.Todos" Filter="this.Filter" ToggleAllTodos="this.OnToggleAllTodos" ToggleTodo="this.OnToggleTodo" RemoveTodo="this.OnRemoveTodo" ChangeTodoTitle="this.OnChangeTodoTitle" />
+    <FooterSection Todos="this.repository.Todos" Filter="this.Filter" ClearCompletedTodos="this.OnClearCompletedTodos" />
+</section>
+<footer class="info">
+    <p><CultureSelector /></p>
+    <p>Double-click to edit a todo</p>
+    <p>Created by <a href="https://www.rent-a-developer.de/">David Liebeherr</a></p>
+    <p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
+</footer>
+
+@code
+{
+    [Parameter]
+    public String FilterParameter
+    {
+        get => this.Filter.ToString();
+        set => this.Filter = String.IsNullOrEmpty(value) ? TodoFilter.All : Enum.Parse<TodoFilter>(value, true);
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await this.repository.Initialize();
+    }
+
+    private async Task OnAddTodo(AddTodoEventArgs args)
+    {
+        await this.repository.AddTodo(args.Title);
+    }
+
+    private async Task OnChangeTodoTitle(ChangeTodoTitleEventArgs args)
+    {
+        await this.repository.ChangeTodoTitle(args.Todo, args.NewTitle);
+    }
+
+    private async Task OnToggleTodo(TodoEventArgs args)
+    {
+        await this.repository.ToggleTodo(args.Todo);
+    }
+
+    private async Task OnToggleAllTodos()
+    {
+        await this.repository.ToggleAllTodos();
+    }
+
+    private async Task OnRemoveTodo(TodoEventArgs args)
+    {
+        await this.repository.RemoveTodo(args.Todo);
+    }
+
+    private async Task OnClearCompletedTodos()
+    {
+        await this.repository.RemoveCompletedTodos();
+    }
+
+    private TodoFilter Filter { get; set; }
+}

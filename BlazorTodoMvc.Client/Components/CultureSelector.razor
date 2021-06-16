@@ -1,0 +1,19 @@
+﻿@inject NavigationManager navigationManager
+@inject LocalizationProvider localizationProvider
+
+<div class="cultureSelector">
+    @foreach (var culture in this.localizationProvider.Cultures)
+    {
+        <a class="selectCultureLink" @onclick="@(() => this.SelectCulture(culture))">
+            <span class="flag-icon flag-icon-@culture.FlagName" title="@culture.DisplayName"></span>
+        </a>
+    }
+</div>
+
+@code {
+    private async Task SelectCulture(Culture culture)
+    {
+        await this.localizationProvider.ChangeCulture(culture.Name);
+        this.navigationManager.NavigateTo(this.navigationManager.Uri, forceLoad: true);
+    }
+}

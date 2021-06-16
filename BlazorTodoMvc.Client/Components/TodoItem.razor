@@ -1,0 +1,82 @@
+﻿<li class="@(this.Todo.IsComplete ? "completed" : "") @(this.isEditing ? "editing" : "")">
+    <div class="view">
+        <input checked="@this.Todo.IsComplete" class="toggle" @onchange="this.OnToggleCheckboxChanged" type="checkbox">
+        <label @ondblclick="@this.OnLabelDoubleClicked">@this.Todo.Title</label>
+        <button class="destroy" @onclick="this.OnRemoveButtonClicked"></button>
+    </div>
+    <input @bind="@this.editTitle" @bind:event="oninput" class="edit" @onkeydown="@this.OnTitleTextBoxKeyDown">
+</li>
+
+@code
+{
+    /// <summary>
+    /// The todo item to display.
+    /// </summary>
+    [Parameter]
+    public Todo Todo { get; set; }
+
+    /// <summary>
+    /// A callback invoked when the user wants to change the title of the todo.
+    /// </summary>
+    [Parameter]
+    public EventCallback<ChangeTodoTitleEventArgs> ChangeTodoTitle { get; set; }
+
+    /// <summary>
+    /// A callback invoked when the user wants to toggle the completion status of the todo.
+    /// </summary>
+    [Parameter]
+    public EventCallback<TodoEventArgs> ToggleTodo { get; set; }
+
+    /// <summary>
+    /// A callback invoked when the user wants to remove the todo.
+    /// </summary>
+    [Parameter]
+    public EventCallback<TodoEventArgs> RemoveTodo { get; set; }
+
+    private void OnLabelDoubleClicked()
+    {
+        this.BeginEdit();
+    }
+
+    private async Task OnTitleTextBoxKeyDown(KeyboardEventArgs args)
+    {
+        if (args.Key == "Escape")
+        {
+            this.CancelEdit();
+        }
+        else if (args.Key == "Enter")
+        {
+            await this.CommitEdit();
+        }
+    }
+
+    private async Task OnToggleCheckboxChanged()
+    {
+        await this.ToggleTodo.InvokeAsync(new TodoEventArgs(this.Todo));
+    }
+
+    private async Task OnRemoveButtonClicked()
+    {
+        await this.RemoveTodo.InvokeAsync(new TodoEventArgs(this.Todo));
+    }
+
+    private void BeginEdit()
+    {
+        this.editTitle = Todo.Title;
+        this.isEditing = true;
+    }
+
+    private void CancelEdit()
+    {
+        this.isEditing = false;
+    }
+
+    private async Task CommitEdit()
+    {
+        this.isEditing = false;
+        await ChangeTodoTitle.InvokeAsync(new ChangeTodoTitleEventArgs(this.Todo, this.editTitle));
+    }
+
+    private Boolean isEditing;
+    private String editTitle;
+}

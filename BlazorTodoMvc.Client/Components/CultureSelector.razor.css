@@ -1,0 +1,14 @@
+﻿.cultureSelector
+{
+    margin: 20px;
+}
+
+.selectCultureLink {
+    margin: 10px;
+    cursor: pointer;
+}
+
+.flag-icon {
+    width: 2em;
+    line-height: 2em;
+}
