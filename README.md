@@ -12,3 +12,4 @@ An implementation of the TodoMVC app using Blazor WebAssembly.
 * Download the code or clone this repository.
 * Open a command prompt in the root directory.
 * Execute the following command: ``dotnet watch run --project BlazorTodoMvc.Server``
+* Open a browser and go to http://localhost:5000
