@@ -1,4 +1,4 @@
-# examples-BlazorTodoMVC
+# BlazorTodoMVC
 An implementation of the TodoMVC app using Blazor WebAssembly.
 
 # features
